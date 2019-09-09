@@ -95,7 +95,7 @@ marked.setOptions({
 export default {
   name: "app",
   data() {
-    let content = `<style>
+    let defContent = `<style>
 p {
 text-align: center;
 }
@@ -108,15 +108,16 @@ img {
 
 **Click here to edit notes**
 `;
+    let content = defContent;
     let local = localStorage.getItem("markdown-note");
-    if (local !== null && local.length > 0 && !local.trim() == "") {
+    if (local !== null && local.length > 0 && local.trim() !== "") {
       content = localStorage.getItem("markdown-note");
     }
-
     let editing = false;
     let cached = "";
     return {
       content,
+      defContent,
       editing,
       cached
     };
@@ -133,6 +134,7 @@ img {
     },
     save() {
       localStorage.setItem("markdown-note", this.content);
+      if (this.content.length === 0) this.content = this.defContent;
       this.editing = false;
       let el = this.$el.querySelectorAll("code");
       for (let i = 0; i < el.length; i++) {
@@ -145,9 +147,10 @@ img {
     },
     codeClass() {
       setTimeout(() => {
-        let el = this.$el.querySelectorAll(".language-js");
+        let el = this.$el.querySelectorAll("code");
         for (let i = 0; i < el.length; i++) {
-          el[i].classList.add("hljs");
+          if (el[i].getAttribute("class").includes("language-"))
+            el[i].classList.add("hljs");
         }
       }, 50);
     }
