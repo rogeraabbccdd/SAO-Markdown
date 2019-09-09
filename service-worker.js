@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "precache-manifest.dd27287828514f154d4fe84eb5d4f117.js"
+  "precache-manifest.ed4401c7034f057af69996ccb1163e6c.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "saomd"});
